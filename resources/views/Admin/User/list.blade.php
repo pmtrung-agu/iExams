@@ -14,7 +14,6 @@
             <th data-sort-initial="true" data-toggle="true">STT</th>
             <th>Username</th>
             <th>Họ tên</th>
-            <th>Đội Quản lý</th>
             <th>Quyền</th>
             <th class="text-center">Tình trạng</th>
             <th data-sort-ignore="true" class="text-center">#</th>
@@ -27,9 +26,8 @@
                   <td>{{ $key+1 }}</td>
                   <td>{{ isset($user['username']) ? $user['username'] : '' }}</td>
                   <td>{{ isset($user['fullname']) ? $user['fullname'] : '' }}</td>
-                  <td class="text-center">@if($user['id_dm_doiquanly']) {{ App\Http\Controllers\DMDoiQuanLyController::getDoi($user['id_dm_doiquanly']) }} @endif</td>
-                  <td style="font-size:15px;" class="text-center">
-                    @if(isset($user['roles']))
+                  <td>
+                    @if(isset($user['roles']) && $user['roles'])
                       @foreach($user['roles'] as $role)
                         <span class="badge badge-pill badge-primary">{{ $roles[$role] }}</span>
                       @endforeach
@@ -43,12 +41,8 @@
                     @endif
                   </td>
                   <td class="text-center">
-                    @if(in_array('Admin', $user['roles']))
-                      <i class="fa fa-trash"></i>
-                    @else
-                      <a href="{{ env('APP_URL') }}admin/user/delete/{{ $user['_id'] }}" onclick="return confirm('Chắc chắn xóa?')" title="Xóa tài khoản người dùng"><i class="fa fa-trash text-danger"></i></a>
-                    @endif
-                      <a href="{{ env('APP_URL') }}admin/user/edit/{{ $user['_id'] }}" ><i class="fa fa-pencil-alt" title="Chỉnh sửa tài khoản người dùng"></i></a>
+                      <a href="{{ env('APP_URL') }}admin/user/delete/{{ $user['_id'] }}" onclick="return confirm('Chắc chắn xóa?')" title="Xóa tài khoản người dùng"><i class="mdi mdi-delete text-danger"></i></a>
+                      <a href="{{ env('APP_URL') }}admin/user/edit/{{ $user['_id'] }}" ><i class="mdi mdi-account-edit" title="Chỉnh sửa tài khoản người dùng"></i></a>
                   </td>
               </tr>
             @endforeach

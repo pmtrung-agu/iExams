@@ -1,34 +1,35 @@
-@extends('Admin.layout')
-@section('title') Thêm tài khoản người dùng @endsection
-@section('css')
-  <link href="{{ env('APP_URL') }}assets/libs/select2/select2.min.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="{{ env('APP_URL') }}assets/libs/switchery/switchery.min.css">
-  <link rel="stylesheet" href="{{ env('APP_URL') }}assets/libs/magnific-popup/magnific-popup.css"/>
-@endsection
-@section('body')
+
+<?php $__env->startSection('title'); ?> Thêm tài khoản người dùng <?php $__env->stopSection(); ?>
+<?php $__env->startSection('css'); ?>
+  <link href="<?php echo e(env('APP_URL')); ?>assets/libs/select2/select2.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="<?php echo e(env('APP_URL')); ?>assets/libs/switchery/switchery.min.css">
+  <link rel="stylesheet" href="<?php echo e(env('APP_URL')); ?>assets/libs/magnific-popup/magnific-popup.css"/>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('body'); ?>
 <div class="row">
   <div class="col-12">
     <div class="card-box">
-      <h3 class="m-t-0"><a href="{{ env('APP_URL') }}admin/user" class="btn btn-primary"><i class="mdi mdi-reply-all"></i></a> Thêm tài khoản người dùng</h3>
-      <form action="{{ env('APP_URL') }}admin/user/create" method="post" id="dinhkemform" enctype="multipart/form-data">
-        {{ csrf_field() }}
+      <h3 class="m-t-0"><a href="<?php echo e(env('APP_URL')); ?>admin/user" class="btn btn-primary"><i class="mdi mdi-reply-all"></i></a> Thêm tài khoản người dùng</h3>
+      <form action="<?php echo e(env('APP_URL')); ?>admin/user/create" method="post" id="dinhkemform" enctype="multipart/form-data">
+        <?php echo e(csrf_field()); ?>
+
           <div class="form-body">
               <hr>
-              @if($errors->any())
+              <?php if($errors->any()): ?>
                 <div class="alert alert-success">
                   <ul>
-                  @foreach ($errors->all() as $error)
-                      <li>{{ $error }}</li>
-                  @endforeach
+                  <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <li><?php echo e($error); ?></li>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
                 </div>
-              @endif
+              <?php endif; ?>
               <div class="row">
                   <div class="col-md-12">
                       <div class="form-group row">
                           <label class="control-label col-md-2 text-right p-t-10">Tài khỏan</label>
                           <div class="col-md-4">
-                              <input type="text" id="username" name="username" class="form-control" placeholder="Tài khoản người dùng" value="{{ old('username') }}" required />
+                              <input type="text" id="username" name="username" class="form-control" placeholder="Tài khoản người dùng" value="<?php echo e(old('username')); ?>" required />
                           </div>
                           <label class="control-label col-md-2 text-right p-t-10">Mật khẩu</label>
                           <div class="col-md-4">
@@ -42,11 +43,11 @@
                       <div class="form-group row">
                           <label class="control-label col-md-2 text-right p-t-10">Họ tên</label>
                           <div class="col-md-4">
-                              <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Họ tên" value="{{ old('fullname') }}">
+                              <input type="text" id="fullname" name="fullname" class="form-control" placeholder="Họ tên" value="<?php echo e(old('fullname')); ?>">
                           </div>
                           <label class="control-label col-md-2 text-right p-t-10">Điện thoại</label>
                           <div class="col-md-4">
-                              <input type="text" id="phone" name="phone" class="form-control" placeholder="Điện thoại" value="{{ old('phone') }}">
+                              <input type="text" id="phone" name="phone" class="form-control" placeholder="Điện thoại" value="<?php echo e(old('phone')); ?>">
                           </div>
                       </div>
                   </div>
@@ -58,11 +59,11 @@
                           <div class="col-md-4">
                               <select class="select2 m-b-10" id="address_1" name="address[]" style="width: 100%" data-placeholder="Chọn Tỉnh">
                                   <option value="">Tỉnh</option>}
-                                  @if($address)
-                                    @foreach($address as $a)
-                                      <option value="{{ $a['ma'] }}" @if($a['ma'] == old('address.0')) selected @endif >{{ $a['ten'] }}</option>
-                                    @endforeach
-                                  @endif
+                                  <?php if($address): ?>
+                                    <?php $__currentLoopData = $address; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $a): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                      <option value="<?php echo e($a['ma']); ?>" <?php if($a['ma'] == old('address.0')): ?> selected <?php endif; ?> ><?php echo e($a['ten']); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                  <?php endif; ?>
                               </select>
                           </div>
                           <div class="col-md-3">
@@ -84,7 +85,7 @@
                       <div class="form-group row">
                           <label class="control-label col-md-2 text-right p-t-10">Địa chỉ</label>
                           <div class="col-md-10">
-                              <input type="text" id="address_4" name="address[]" class="form-control" placeholder="Số nhà, tên đường, khóm, ấp,..." value="{{ old('address.3')}}" required>
+                              <input type="text" id="address_4" name="address[]" class="form-control" placeholder="Số nhà, tên đường, khóm, ấp,..." value="<?php echo e(old('address.3')); ?>" required>
                           </div>
                       </div>
                   </div>
@@ -96,11 +97,11 @@
                         <div class="col-12 col-md-6">
                           <select name="roles[]" id="roles" multiple class="form-control" data-placeholer="Chọn quyền" style="width:100%;" required>
                             <option value="">Chọn quyền</option>
-                            @if($roles)
-                              @foreach($roles as $key => $value)
-                                <option value="{{ $key }}">{{ $value }}</option>
-                              @endforeach
-                            @endif
+                            <?php if($roles): ?>
+                              <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($key); ?>"><?php echo e($value); ?></option>
+                              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                           </select>
                         </div>
                         <label class="control-label col-md-2 text-right p-t-10"></label>
@@ -128,68 +129,70 @@
                 <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
              <div id="list_hinhanh" class="form-group row portfolioContainer">
-               @if(old('hinhanh_aliasname') !== null)
-                  @foreach(old('hinhanh_aliasname') as $key => $hinhanh)
+               <?php if(old('hinhanh_aliasname') !== null): ?>
+                  <?php $__currentLoopData = old('hinhanh_aliasname'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $hinhanh): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   <div class="col-sm-6 col-md-4 items draggable-element text-center">
-                    <input type="hidden" name="hinhanh_aliasname[]" value="{{ $hinhanh}}" readonly/>
-                    <input type="hidden" name="hinhanh_filename[]" value="{{ old('hinhanh_filename.'.$key) }}" class="form-control"/>
-                    <a href="{{ env('APP_URL') }}storage/images/origin/{{$hinhanh}}" class="image-popup">
+                    <input type="hidden" name="hinhanh_aliasname[]" value="<?php echo e($hinhanh); ?>" readonly/>
+                    <input type="hidden" name="hinhanh_filename[]" value="<?php echo e(old('hinhanh_filename.'.$key)); ?>" class="form-control"/>
+                    <a href="<?php echo e(env('APP_URL')); ?>storage/images/origin/<?php echo e($hinhanh); ?>" class="image-popup">
                       <div class="portfolio-masonry-box">
                         <div class="portfolio-masonry-img">
-                          <img src="{{ env('APP_URL') }}storage/images/thumb_300x200/{{$hinhanh}}" class="thumb-img img-fluid" alt="work-thumbnail">
+                          <img src="<?php echo e(env('APP_URL')); ?>storage/images/thumb_300x200/<?php echo e($hinhanh); ?>" class="thumb-img img-fluid" alt="work-thumbnail">
                         </div>
                         <div class="portfolio-masonry-detail">
-                          <p>{{ $hinhanh }}</p>
+                          <p><?php echo e($hinhanh); ?></p>
                         </div>
                       </div>
                     </a>
-                    <a href="{{ env('APP_URL') }}image/delete/{{ $hinhanh }}" onclick="return false;" class="btn btn-danger btn-sm delete_file" style="position:absolute;top:40px;right:30px;">
+                    <a href="<?php echo e(env('APP_URL')); ?>image/delete/<?php echo e($hinhanh); ?>" onclick="return false;" class="btn btn-danger btn-sm delete_file" style="position:absolute;top:40px;right:30px;">
                       <i class="fa fa-trash"></i>
                     </a>
-                    <input type="text" name="hinhanh_title[]" value="{{ old('hinhanh_title.'.$key) }}" class="form-control"/>
+                    <input type="text" name="hinhanh_title[]" value="<?php echo e(old('hinhanh_title.'.$key)); ?>" class="form-control"/>
                   </div>
-                  @endforeach
-               @endif
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+               <?php endif; ?>
              </div>
             </div>
           <div class="form-actions">
               <button type="submit" class="btn btn-info"> <i class="fa fa-check"></i> Cập nhật</button>
-              <a href="{{ env('APP_URL') }}admin/user" class="btn btn-light"><i class="mdi mdi-reply-all"></i> Trở về</a>
+              <a href="<?php echo e(env('APP_URL')); ?>admin/user" class="btn btn-light"><i class="mdi mdi-reply-all"></i> Trở về</a>
           </div>
       </form>
     </div>
   </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-  <script src="{{ env('APP_URL') }}assets/libs/select2/select2.min.js" type="text/javascript"></script>
-  <script src="{{ env('APP_URL') }}assets/libs/switchery/switchery.min.js"></script>
-  <script type="text/javascript" src="{{ env('APP_URL') }}assets/libs/isotope/isotope.pkgd.min.js"></script>
-  <script type="text/javascript" src="{{ env('APP_URL') }}assets/libs/magnific-popup/jquery.magnific-popup.min.js"></script>
-  <script src="{{ env('APP_URL') }}assets/js/drag-arrange.min.js"></script>
-  <script src="{{ env('APP_URL') }}assets/js/script.js" type="text/javascript"></script>
+<?php $__env->startSection('js'); ?>
+  <script src="<?php echo e(env('APP_URL')); ?>assets/libs/select2/select2.min.js" type="text/javascript"></script>
+  <script src="<?php echo e(env('APP_URL')); ?>assets/libs/switchery/switchery.min.js"></script>
+  <script type="text/javascript" src="<?php echo e(env('APP_URL')); ?>assets/libs/isotope/isotope.pkgd.min.js"></script>
+  <script type="text/javascript" src="<?php echo e(env('APP_URL')); ?>assets/libs/magnific-popup/jquery.magnific-popup.min.js"></script>
+  <script src="<?php echo e(env('APP_URL')); ?>assets/js/drag-arrange.min.js"></script>
+  <script src="<?php echo e(env('APP_URL')); ?>assets/js/script.js" type="text/javascript"></script>
   <script type="text/javascript">
        $(document).ready(function() {
-          $(".select2").select2();upload_hinhanh("{{ env('APP_URL') }}image/uploads");delete_hinhanh();
+          $(".select2").select2();upload_hinhanh("<?php echo e(env('APP_URL')); ?>image/uploads");delete_hinhanh();
           $("#roles").select2({
             placeholder: "Chọn quyền"
           });
-          @if (old('address.0') !== null)
-          $.get("{{ env('APP_URL') }}admin/dia-chi/get/{{ old('address.0') }}/{{ old('address.1') }}", function(huyen){
+          <?php if(old('address.0') !== null): ?>
+          $.get("<?php echo e(env('APP_URL')); ?>admin/dia-chi/get/<?php echo e(old('address.0')); ?>/<?php echo e(old('address.1')); ?>", function(huyen){
             $("#address_2").html(huyen);
           });
-          @endif
-          @if(old('address.1') !== null)
-          $.get("{{ env('APP_URL') }}admin/dia-chi/get/{{ old('address.1') }}/{{ old('address.2') }}", function(xa){
+          <?php endif; ?>
+          <?php if(old('address.1') !== null): ?>
+          $.get("<?php echo e(env('APP_URL')); ?>admin/dia-chi/get/<?php echo e(old('address.1')); ?>/<?php echo e(old('address.2')); ?>", function(xa){
             $("#address_3").html(xa);
           });
-          @endif
-          chontinh("{{ env('APP_URL') }}");chonhuyen("{{env('APP_URL')}}");
+          <?php endif; ?>
+          chontinh("<?php echo e(env('APP_URL')); ?>");chonhuyen("<?php echo e(env('APP_URL')); ?>");
           $('.js-switch').each(function() {
               new Switchery($(this)[0], $(this).data());
           });
           popup_images();$("#progressbar").hide();
       });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('Admin.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\iExams\resources\views/Admin/User/add.blade.php ENDPATH**/ ?>

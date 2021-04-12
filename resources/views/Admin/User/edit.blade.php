@@ -133,23 +133,6 @@
                                         <input type="checkbox" name="active" id="active" class="js-switch" data-color="#009efb" value="1" @if($user['active'] == 1 || old('active') !== null) checked @endif />
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    @php
-                                      $id_dm_doiquanly = old('id_dm_doiquanly') != null ? old('id_dm_doiquanly') : $user['id_dm_doiquanly'];
-                                    @endphp
-                                    <label class="control-label col-md-2 text-right p-t-10">Đội quản lý:</label>
-                                      <div class="col-md-10">
-                                        <select name="id_dm_doiquanly[]" id="id_dm_doiquanly" multiple class="select2 form-control" data-placeholder="Chọn đội quản lý">
-                                          <option value="">Đội quản lý</option>
-                                          @if($doiquanly)
-                                            @foreach($doiquanly as $dql)
-                                              <option value="{{ $dql['_id'] }}" @if(is_array($id_dm_doiquanly) && in_array($dql['_id'],$id_dm_doiquanly)) selected @endif>{{ $dql['ten_doi'] }}</option>
-                                            @endforeach
-                                          @endif
-                                        </select>
-                                      </div>
-
-                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -158,7 +141,7 @@
                                     <label class="control-label col-md-2 text-right p-t-10">Hình ảnh</label>
                                     <div class="col-md-4">
                                       <label class="btn btn-info">
-                                        <input type="file" name="dinhkem[]" class="dinhkem btn btn-info" multiple accept="image/*" placeholder="Chọn hình ảnh" style="display:none;" />
+                                        <input type="file" name="hinhanh_files[]" class="dinhkem hinhanh_files btn btn-info" multiple accept="image/*" placeholder="Chọn hình ảnh" style="display:none;" />
                                         <i class="fa fa-file-photo-o"></i> Chọn hình ảnh 900x600
                                       </label>
                                     </div>

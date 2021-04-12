@@ -28,6 +28,21 @@ Route::get('file/download/{filename}', 'FileController@download')->middleware('c
 Route::get('address/get/{id}', 'DMDiaChiController@getOptions')->middleware('checkauth');
 Route::get('address/get/{id}/{id1}', 'DMDiaChiController@getOptions1')->middleware('checkauth');
 Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
-    Route::get('nam-hoc', 'RequestController@nam_hoc');
-    Route::get('request-nam-hoc', 'RequestController@request_nam_hoc');
+    Route::get('/', 'AuthController@admin');
+    Route::group(['prefix' => 'danh-muc',  'middleware' => 'role:Admin,Manager'], function(){
+        Route::get('nam-hoc', 'RequestController@nam_hoc');
+        Route::get('request-nam-hoc', 'RequestController@request_nam_hoc');
+    });
+
+    Route::get('user', 'UserController@list')->middleware('role:Admin');
+    Route::get('user/change-password', 'UserController@change_password')->middleware('role:Admin');
+    Route::post('user/update-password', 'UserController@update_password')->middleware('role:Admin');
+    Route::get('user/add', 'UserController@add')->middleware('role:Admin');
+    Route::post('user/create', 'UserController@create')->middleware('role:Admin');
+    Route::get('user/edit/{id}', 'UserController@edit')->middleware('role:Admin');
+    Route::post('user/update', 'UserController@update')->middleware('role:Admin');
+    Route::get('user/delete/{id}', 'UserController@delete')->middleware('role:Admin');
+
+    Route::get('dia-chi/get/{id}', 'DMDiaChiController@getOptions');
+    Route::get('dia-chi/get/{id}/{id1}', 'DMDiaChiController@getOptions1');
 });

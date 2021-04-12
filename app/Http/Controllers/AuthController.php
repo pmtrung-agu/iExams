@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Hash;
 use Session;
-use App\Models\Article;
 class AuthController extends Controller
 {
     //
@@ -131,9 +130,5 @@ class AuthController extends Controller
     Auth::logout();Session::flush();
     return redirect()->intended(env('APP_URL').'auth/login');
     //return view('Admin.page_not_permis');
-  }
-
-  function dang_xay_dung(){
-    return view('Admin.dang_xay_dung');
   }
 }

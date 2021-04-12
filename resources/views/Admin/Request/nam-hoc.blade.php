@@ -31,7 +31,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#data-table').dataTable({
-            "ajax" : '{{ env('APP_URL') }}admin/request-nam-hoc'
+            "ajax" : '{{ env('APP_URL') }}admin/danh-muc/request-nam-hoc'
         });
     });
 </script>

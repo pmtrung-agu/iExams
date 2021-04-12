@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\DMDiaChi;
-use App\Models\DMDoiQuanLy;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\AuthController;
 use Image;
@@ -14,7 +13,7 @@ use Validator;
 use Redirect;
 
 class UserController extends Controller {
-    private static $roles = array('Admin' => 'Quản trị', 'ThanhTra' => 'Thanh Tra', 'VanTai' => 'Vận Tải');
+    private static $roles = array('Admin' => 'Quản trị', 'Manager' => 'Quản lý', 'Teacher' => 'Giáo viên', 'Student' => 'Học viên');
 
     function __construct(){
       if(!AuthController::checkAuth()) return view('welcome');
@@ -31,15 +30,13 @@ class UserController extends Controller {
 
     function add(){
       $address = DMDiaChi::where('matructhuoc', 'exists', false)->orWhere('matructhuoc', '=', '')->get();
-      $doiquanly = DMDoiQuanLy::All();
-      return view('Admin.User.add', ['address' => $address, 'roles' => self::$roles, 'doiquanly' => $doiquanly]);
+      return view('Admin.User.add', ['address' => $address, 'roles' => self::$roles]);
     }
 
     function create(Request $request){
       $validator = Validator::make($request->all(), [
         'username' => 'required|unique:users',
         'fullname' => 'required',
-        'roles' => 'required'
       ]);
       if ($validator->fails()) {
         return redirect(env('APP_URL').'admin/user/add')->withErrors($validator)->withInput();
@@ -52,7 +49,6 @@ class UserController extends Controller {
       $user->roles = isset($data['roles']) ? $data['roles'] : '';
       $user->phone = $data['phone'];
       $user->address = $data['address'];
-      $user->id_dm_doiquanly = isset($data['id_dm_doiquanly']) ? $data['id_dm_doiquanly'] : '';
       $user->active = isset($data['active']) ? intval($data['active']) : 0;
       $arr_photo = array();
       if(isset($data['hinhanh_aliasname'])){
@@ -104,8 +100,7 @@ class UserController extends Controller {
       if(isset($user['address'][1]) && $user['address'][1]){
         $address_2 = DMDiaChi::where('matructhuoc', '=', $user['address'][1])->get();
       } else { $address_2 = ''; }
-      $doiquanly = DMDoiQuanLy::All();
-      return view('Admin.User.edit', ['user' => $user, 'address' => $address,'address_1' => $address_1,'address_2' => $address_2, 'roles' => self::$roles, 'destination' => $destination, 'doiquanly' => $doiquanly]);
+      return view('Admin.User.edit', ['user' => $user, 'address' => $address,'address_1' => $address_1,'address_2' => $address_2, 'roles' => self::$roles, 'destination' => $destination]);
     }
 
     function update(Request $request){
@@ -113,7 +108,7 @@ class UserController extends Controller {
       $validator = Validator::make($request->all(), [
            'username' => 'required|unique:users,id'.$data['id'],
            'fullname'  => 'required',
-        ]);
+       ]);
        if ($validator->fails()) {
           return redirect(env('APP_URL').'admin/user/edit/'.$data['id'])->withErrors($validator)->withInput();
         }
@@ -130,7 +125,6 @@ class UserController extends Controller {
         $user->roles = isset($data['roles']) ? $data['roles'] : '';
         $user->phone = $data['phone'];
         $user->address = $data['address'];
-        $user->id_dm_doiquanly = isset($data['id_dm_doiquanly']) ? $data['id_dm_doiquanly'] : '';
         $user->active = isset($data['active']) ? intval($data['active']) : 0;
         $arr_photo = array();
         if(isset($data['hinhanh_aliasname'])){
@@ -215,11 +209,5 @@ class UserController extends Controller {
         return redirect(env('APP_URL').'admin/user/change-password')->withErrors(['msg' => 'Thay đổi mật khẩu thành công'])->withInput();
       }
     }
-  }
-
-  static function checkDoi($id_doi){
-    $check = User::where('id_dm_doiquanly', $id_doi)->first();
-    if($check) return true;
-    else return false;
-  }
+}
 }
