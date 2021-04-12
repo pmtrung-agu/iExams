@@ -178,6 +178,7 @@ return [
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Jenssegers\Mongodb\Auth\PasswordResetServiceProvider::class,
         Jenssegers\Mongodb\MongodbQueueServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
 
     ],
 
@@ -230,8 +231,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Image' => Intervention\Image\Facades\Image::class
-
+        'Image' => Intervention\Image\Facades\Image::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     ],
 
 ];
