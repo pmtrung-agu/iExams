@@ -32,6 +32,24 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
     Route::group(['prefix' => 'danh-muc',  'middleware' => 'role:Admin,Manager'], function(){
         Route::get('nam-hoc', 'RequestController@nam_hoc');
         Route::get('request-nam-hoc', 'RequestController@request_nam_hoc');
+        Route::get('danh-sach-hoc-sinh', 'RequestController@danh_sach_hoc_sinh');
+        Route::get('request-danh-sach-hoc-sinh', 'RequestController@request_danh_sach_hoc_sinh');
+        Route::get('mon-hoc', 'RequestController@mon_hoc');
+        Route::get('request-mon-hoc', 'RequestController@request_mon_hoc');
+
+        Route::get('phong-thi', 'DMPhongThiController@index')->middleware('role:Admin,Manager');
+        Route::get('phong-thi/add', 'DMPhongThiController@add')->middleware('role:Admin,Manager');
+        Route::post('phong-thi/create', 'DMPhongThiController@create')->middleware('role:Admin,Manager');
+        Route::get('phong-thi/edit/{id}', 'DMPhongThiController@edit')->middleware('role:Admin,Manager');
+        Route::post('phong-thi/update', 'DMPhongThiController@update')->middleware('role:Admin,Manager');
+        Route::get('phong-thi/delete/{id}', 'DMPhongThiController@delete')->middleware('role:Admin,Manager');
+
+        Route::get('buoi-thi', 'DMBuoiThiController@index')->middleware('role:Admin,Manager');
+        Route::get('buoi-thi/add', 'DMBuoiThiController@add')->middleware('role:Admin,Manager');
+        Route::post('buoi-thi/create', 'DMBuoiThiController@create')->middleware('role:Admin,Manager');
+        Route::get('buoi-thi/edit/{id}', 'DMBuoiThiController@edit')->middleware('role:Admin,Manager');
+        Route::post('buoi-thi/update', 'DMBuoiThiController@update')->middleware('role:Admin,Manager');
+        Route::get('buoi-thi/delete/{id}', 'DMBuoiThiController@delete')->middleware('role:Admin,Manager');
     });
 
     Route::get('user', 'UserController@list')->middleware('role:Admin');
