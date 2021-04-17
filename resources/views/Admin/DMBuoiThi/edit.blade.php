@@ -5,7 +5,7 @@
   <div class="col-12">
     <div class="card-box">
         <h3 class="m-t-0"><a href="{{ env('APP_URL') }}admin/buoi-thi" class="btn btn-primary"><i class="mdi mdi-reply-all"></i></a> Chỉnh sửa danh mục Buổi thi</h3>
-        <form action="{{ env('APP_URL') }}admin/buoi-thi/update" method="post" id="dinhkemform">
+        <form action="{{ env('APP_URL') }}admin/danh-muc/buoi-thi/update" method="post" id="dinhkemform">
             {{ csrf_field() }}
             <input type="hidden" name="id" id="id" value="{{ $buoithi['_id'] }}">
             <div class="form-body">
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="form-actions">
-                <a href="{{ env('APP_URL') }}admin/buoi-thi" class="btn btn-light"><i class="fa fa-reply-all"></i> Trở về</a>
+                <a href="{{ env('APP_URL') }}admin/danh-muc/buoi-thi" class="btn btn-light"><i class="fa fa-reply-all"></i> Trở về</a>
                 <button type="submit" class="btn btn-info"> <i class="fa fa-check"></i> Cập nhật</button>
             </div>
         </form>

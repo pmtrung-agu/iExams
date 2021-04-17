@@ -1,7 +1,7 @@
 <?php $__env->startSection('title', 'Danh mục Phòng thi'); ?>
 <?php $__env->startSection('css'); ?>
-  <link href="<?php echo e(env('APP_URL')); ?>assets/backend/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-  <link href="<?php echo e(env('APP_URL')); ?>assets/backend/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+  <link href="<?php echo e(env('APP_URL')); ?>assets/libs/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
+  <link href="<?php echo e(env('APP_URL')); ?>assets/libs/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('body'); ?>
 <div class="row">
@@ -32,8 +32,8 @@
                   <td class="text-center"><?php echo e($kh['mota']); ?></td>
                   <td class="text-center">
                     
-                    <a href="<?php echo e(env('APP_URL')); ?>admin/phong-thi/delete/<?php echo e($kh['_id']); ?>" onClick="return confirm('Chắc chắn xóa?');"><i class="fa fa-trash text-danger"></i></a>
-                    <a href="<?php echo e(env('APP_URL')); ?>admin/phong-thi/edit/<?php echo e($kh['_id']); ?>"><i class="fas fa-pencil-alt"></i></a>
+                    <a href="<?php echo e(env('APP_URL')); ?>admin/danh-muc/phong-thi/delete/<?php echo e($kh['_id']); ?>" onClick="return confirm('Chắc chắn xóa?');"><i class="fa fa-trash text-danger"></i></a>
+                    <a href="<?php echo e(env('APP_URL')); ?>admin/danh-muc/phong-thi/edit/<?php echo e($kh['_id']); ?>"><i class="fas fa-pencil-alt"></i></a>
                   </td>
                 </tr>
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -45,8 +45,8 @@
 </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
-  <script src="<?php echo e(env('APP_URL')); ?>assets/backend/plugins/datatables/jquery.dataTables.min.js"></script>
-  <script src="<?php echo e(env('APP_URL')); ?>assets/backend/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?php echo e(env('APP_URL')); ?>assets/libs/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?php echo e(env('APP_URL')); ?>assets/libs/datatables/dataTables.bootstrap4.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
       $('#responsive-datatable').DataTable();

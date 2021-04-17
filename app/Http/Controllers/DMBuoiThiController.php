@@ -46,7 +46,7 @@ class DMBuoiThiController extends Controller
     }
 
     function edit(Request $request, $id = ''){
-        $buoithi = BuoiThi::find($id);
+        $buoithi = DMBuoiThi::find($id);
         return view('Admin.DMBuoiThi.edit')->with(compact('buoithi'));
     }
 
@@ -58,7 +58,7 @@ class DMBuoiThiController extends Controller
         if ($validator->fails()) {
           return redirect(env('APP_URL') .'admin/danh-muc/buoi-thi/edit/'.$data['id'])->withErrors($validator)->withInput();
         }
-        $db = BuoiThi::find($data['id']);
+        $db = DMBuoiThi::find($data['id']);
         $db->ten = $data['ten'];
         $db->mota = $data['mota'];
         $db->thutu = isset($data['thutu']) ? intval($data['thutu']) : 0;

@@ -38,7 +38,7 @@
                         <div class="form-group row">
                             <label class="control-label col-md-2 text-right p-t-10">Số lượng máy tính</label>
                             <div class="col-md-4">
-                                <input type="number" id="so_cho" name="so_cho" class="form-control" placeholder="Số chỗ ngồi" value="<?php echo e(old('somay')); ?>" required />
+                                <input type="number" id="so_cho" name="so_cho" class="form-control" placeholder="Số chỗ ngồi" value="<?php echo e(old('so_cho')); ?>" required />
                             </div>
                             <label class="control-label col-md-2 text-right p-t-10">Thứ tự</label>
                             <div class="col-md-4">

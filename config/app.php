@@ -55,7 +55,8 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
-
+    'arr_hocky' => array('hocky1' => 'Học kỳ I', 'hocky2' => 'Học kỳ II'),
+    'arr_khoi' => array(6,7,8,9,10,11,12),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

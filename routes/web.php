@@ -32,6 +32,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
     Route::group(['prefix' => 'danh-muc',  'middleware' => 'role:Admin,Manager'], function(){
         Route::get('nam-hoc', 'RequestController@nam_hoc');
         Route::get('request-nam-hoc', 'RequestController@request_nam_hoc');
+        Route::get('request-nam-hoc-option', 'RequestController@request_nam_hoc_option');
         Route::get('danh-sach-hoc-sinh', 'RequestController@danh_sach_hoc_sinh');
         Route::get('request-danh-sach-hoc-sinh', 'RequestController@request_danh_sach_hoc_sinh');
         Route::get('mon-hoc', 'RequestController@mon_hoc');
@@ -51,6 +52,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
         Route::post('buoi-thi/update', 'DMBuoiThiController@update')->middleware('role:Admin,Manager');
         Route::get('buoi-thi/delete/{id}', 'DMBuoiThiController@delete')->middleware('role:Admin,Manager');
     });
+
+    Route::get('danh-so-bao-danh', 'DanhSachHocSinhController@list')->middleware('role:Admin,Manager');
 
     Route::get('user', 'UserController@list')->middleware('role:Admin');
     Route::get('user/change-password', 'UserController@change_password')->middleware('role:Admin');

@@ -19,6 +19,14 @@ class RequestController extends Controller
         echo  $data->getBody();
     }
 
+    function request_nam_hoc_option(Request $request){
+        $path = env('REQ_URL') . 'nam-hoc-option.html?';
+        $query = $request->getQueryString();
+        $client = new \GuzzleHttp\Client();
+        $data = $client->request('GET', $path . $query, ['auth' => ['user', 'pass']]);
+        echo  $data->getBody();
+    }
+
     function danh_sach_hoc_sinh(){
         return view('Admin.Request.danh-sach-hoc-sinh');
     }
