@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ObjectController;
+use App\Http\Controllers\LogController;
 use App\Models\DanhSachHocSinh;
 use Config;
 class DanhSachHocSinhController extends Controller
@@ -26,17 +27,69 @@ class DanhSachHocSinhController extends Controller
 
     function update(Request $request){
         $data = $request->all();
+        //Single data
+        $khoi = $data['khoi'];
+        $id_namhoc = $data['id_namhoc'];
+        $namhoc = $data['namhoc'];
+        $hocky = $data['hocky'];
+        //Array data
         $id_hocsinh = $data['id_hocsinh'];
+        $hoten = $data['hoten'];
+        $ten = $data['ten'];
         $maso = $data['maso'];
         $id_lophoc = $data['id_lophoc'];
         $lophoc = $data['lophoc'];
-        $hoten = $data['hoten'];
-        $ten = $data['ten'];
-
+        $stt = 1;
+        $id = ObjectController::Id();
         if($id_hocsinh){
             foreach($id_hocsinh as $key => $value){
-                echo $value . '---' .  $ten[$key] . '<br />';
+                if(intval($khoi) < 10) {
+                    $sdb_khoi = '0' . $khoi;
+                } else {
+                    $sdb_khoi = $khoi;
+                }
+                $db = new DanhSachHocSinh();
+                $SBD = $sdb_khoi . ObjectController::number_str_cat($stt, 4);
+                $db->SBD = $SBD;
+                $db->id_hocsinh = ObjectController::ObjectId($value);
+                $db->masohocsinh = $maso[$key];
+                $db->khoi = $khoi;
+                $db->id_lophoc = ObjectController::ObjectId($id_lophoc[$key]);
+                $db->lophoc = $lophoc[$key];
+                $db->hoten = $hoten[$key];
+                $db->ten = $ten[$key];
+                $db->id_namhoc = ObjectController::ObjectId($id_namhoc);
+                $db->namhoc = $namhoc;
+                $db->hocky = $hocky;
+                $db->save();
+                $stt++;
             }
         }
+        $querLog = array(
+            'action' => 'Cập nhật đánh số báo danh [Khối '.$khoi.', Năm học '.$namhoc.', Học kỳ . '.$hocky.']',
+            'id_collection' => $id,
+            'collection' => 'iexams_danh_sach_hoc_sinh',
+            'data' => $data
+        );
+        LogController::addLog($querLog);
+        return redirect(env('APP_URL') . 'admin/danh-so-bao-danh?id_namhoc='.$id_namhoc.'&hocky='.$hocky.'&khoi='.$khoi.'&submit=LOAD');
+    }
+
+    function delete_danh_sach(Request $request){
+        $id_namhoc = $request->input('id_namhoc');
+        $khoi = $request->input('khoi');
+        $hocky = $request->input('hocky');
+        $id = ObjectController::Id();
+        $id_namhoc = ObjectController::ObjectId($id_namhoc);
+        $data = DanhSachHocSinh::where('id_namhoc', '=', $id_namhoc)->where('hocky', '=', $hocky)->where('khoi', '=', $khoi)->get()->toArray();
+        $querLog = array(
+            'action' => 'Xóa danh sách SBD [Khối '.$data[0]['khoi'].', Năm học '.$data[0]['namhoc'].', Học kỳ '.$data[0]['hocky'].']',
+            'id_collection' => $id,
+            'collection' => 'iexams_danh_sach_hoc_sinh',
+            'data' => $data
+        );
+        LogController::addLog($querLog);
+        DanhSachHocSinh::where('id_namhoc', '=', $id_namhoc)->where('hocky', '=', $hocky)->where('khoi', '=', $khoi)->delete();
+        return redirect(env('APP_URL') . 'admin/danh-so-bao-danh?id_namhoc='.$id_namhoc.'&hocky='.$hocky.'&khoi='.$khoi.'&submit=LOAD');
     }
 }

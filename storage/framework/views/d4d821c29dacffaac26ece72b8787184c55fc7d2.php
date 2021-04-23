@@ -13,7 +13,7 @@
                 <div class="row form-group">
                     <label class="control-label col-md-2 text-right p-t-10">Năm học</label>
                     <div class="col-12 col-md-2">
-                        <select name="id_namhoc" id="id_namhoc" class="form-control" required></select>
+                        <select name="id_namhoc" id="id_namhoc" class="form-control" required><option value="">Loading....</option></select>
                     </div>
                     <label class="control-label col-md-2 text-right p-t-10">Học kỳ</label>
                     <div class="col-12 col-md-2">
@@ -52,15 +52,46 @@
         <?php echo e(csrf_field()); ?>
 
         <input type="hidden" name="id_namhoc" value="<?php echo e($id_namhoc); ?>" placeholder="">
+        <input type="hidden" name="namhoc" id="namhoc" value="" placeholder="">
         <input type="hidden" name="khoi" value="<?php echo e($khoi); ?>" placeholder="">
         <input type="hidden" name="hocky" value="<?php echo e($hocky); ?>" placeholder="">
         <div class="row form-group">
             <div class="col-12 col-md-12">
                 <?php if($danhsach): ?>
-                    <div class="alert alert-danger"><h3>Đã đánh số báo danh rồi...</h3></div>
+                    <div class="alert alert-danger">
+                        <h3><i class="fas fa-info-circle"></i> Đã đánh số báo danh rồi..Số lượng: <?php echo e(count($danhsach)); ?> [Khối <?php echo e($khoi); ?>, Năm học <?php echo e($danhsach[0]['namhoc']); ?>, <?php echo e($arr_hocky[$hocky]); ?>]</h3>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12 col-md-12">
+                            <table class="table table-sm table-border table-bordered trable-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>SBD</th>
+                                        <th>Mã số học sinh</th>
+                                        <th>Họ tên</th>
+                                        <th>Lớp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $stt = 1; ?>
+                                    <?php $__currentLoopData = $danhsach; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ds): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr>
+                                        <td class="text-center"><?php echo e($stt); ?></td>
+                                        <td class="text-center bold"><?php echo e($ds['SBD']); ?></td>
+                                        <td class="text-center bold"><?php echo e($ds['masohocsinh']); ?></td>
+                                        <td><?php echo e($ds['hoten']); ?></td>
+                                        <td class="text-center"><?php echo e($ds['lophoc']); ?></td>
+                                    </tr>
+                                    <?php $stt++; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div class="row form-group">
                         <div class="col-12 col-md-12 text-center">
-                            <button type="submit" name="submit" id="submit" value="SUBMIT" class="btn btn-primary"><i class="fas fa-list-ol"></i> ĐÁNH SỐ BÁO DANH</button>
+                            <a href="<?php echo e(env('APP_URL')); ?>admin/danh-so-bao-danh/delete?<?php echo e(Request::getQueryString()); ?>" class="btn btn-danger" onclick="return confirm('Chắc chắn xóa?');"><i class="fa fa-trash"></i> XÓA DANH SÁCH - ĐÁNH SỐ BÁO DANH LẠI</a>
                         </div>
                     </div>
                 <?php else: ?>
@@ -86,12 +117,15 @@
         $(".select2").select2();
         $.get("<?php echo e(env('APP_URL')); ?>admin/danh-muc/request-nam-hoc-option?id_namhoc=<?php echo e($id_namhoc); ?>", function(data){
             $("#id_namhoc").html(data);$("#id_namhoc").select2();
+            var namhoc = $("#id_namhoc option:selected").text();
+            $("#namhoc").val(namhoc);
         });
         <?php if(!$danhsach && $id_namhoc && $khoi && $hocky): ?>
             $.get("<?php echo e(env('APP_URL')); ?>admin/danh-muc/request-danh-sach-hoc-sinh?id_namhoc=<?php echo e($id_namhoc); ?>&khoi=<?php echo e($khoi); ?>&hocky=<?php echo e($hocky); ?>", function(danhsach){
                 $("#load-danh-sach").html(danhsach);
             });
         <?php endif; ?>
+
         
 
     });

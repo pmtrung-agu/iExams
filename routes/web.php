@@ -37,6 +37,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
         Route::get('request-danh-sach-hoc-sinh', 'RequestController@request_danh_sach_hoc_sinh');
         Route::get('mon-hoc', 'RequestController@mon_hoc');
         Route::get('request-mon-hoc', 'RequestController@request_mon_hoc');
+        Route::get('request-mon-hoc-option', 'RequestController@request_mon_hoc_option');
 
         Route::get('phong-thi', 'DMPhongThiController@index')->middleware('role:Admin,Manager');
         Route::get('phong-thi/add', 'DMPhongThiController@add')->middleware('role:Admin,Manager');
@@ -55,6 +56,9 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
 
     Route::get('danh-so-bao-danh', 'DanhSachHocSinhController@list')->middleware('role:Admin,Manager');
     Route::post('danh-so-bao-danh/update', 'DanhSachHocSinhController@update')->middleware('role:Admin,Manager');
+    Route::get('danh-so-bao-danh/delete', 'DanhSachHocSinhController@delete_danh_sach')->middleware('role:Admin,Manager');
+
+    Route::get('xep-phong-thi', 'XepPhongThiController@list')->middleware('role:Admin,Manager');
 
     Route::get('user', 'UserController@list')->middleware('role:Admin');
     Route::get('user/change-password', 'UserController@change_password')->middleware('role:Admin');

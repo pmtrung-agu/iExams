@@ -48,4 +48,12 @@ class RequestController extends Controller
         $data = $client->request('GET', $path . $query, ['auth' => ['user', 'pass']]);
         echo  $data->getBody();
     }
+
+    function request_mon_hoc_option(Request $request){
+        $path = env('REQ_URL') . 'mon-hoc-option.html?';
+        $query = $request->getQueryString();
+        $client = new \GuzzleHttp\Client();
+        $data = $client->request('GET', $path . $query, ['auth' => ['user', 'pass']]);
+        echo  $data->getBody();
+    }
 }
