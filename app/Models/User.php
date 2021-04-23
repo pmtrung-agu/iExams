@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     protected $connection = 'mongodb';
-    protected $collection = 'users';
+    protected $collection = 'iexams_users';
 
     /**
      * The attributes that are mass assignable.

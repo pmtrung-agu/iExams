@@ -6,5 +6,5 @@ class DMDiaChi extends Eloquent
 {
     //
     protected $connection = 'mongodb';
-    protected $collection = 'dm_diachi';
+    protected $collection = 'iexams_dm_diachi';
 }

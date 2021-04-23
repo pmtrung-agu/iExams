@@ -54,6 +54,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
     });
 
     Route::get('danh-so-bao-danh', 'DanhSachHocSinhController@list')->middleware('role:Admin,Manager');
+    Route::post('danh-so-bao-danh/update', 'DanhSachHocSinhController@update')->middleware('role:Admin,Manager');
 
     Route::get('user', 'UserController@list')->middleware('role:Admin');
     Route::get('user/change-password', 'UserController@change_password')->middleware('role:Admin');

@@ -9,7 +9,7 @@ class DMBuoiThi extends Eloquent
 {
     use HasFactory;
     protected $connection = 'mongodb';
-    protected $collection = 'dm_buoi_thi';
+    protected $collection = 'iexams_dm_buoi_thi';
 
     protected $fillable = [
         '_id', 'ten', 'mota'

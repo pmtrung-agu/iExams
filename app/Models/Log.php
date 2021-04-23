@@ -8,6 +8,6 @@ class Log extends Eloquent
 {
     //
     protected $connection = 'mongodb';
-    protected $collection = 'logs';
+    protected $collection = 'iexams_logs';
     //_id, action, id_user, email, name, id_collection, collection, data
 }
