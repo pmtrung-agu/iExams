@@ -100,8 +100,8 @@
                             <li class="has-submenu">
                                 <a href="#"><i class="fa fa-print"></i> In <div class="arrow-down"></div></a>
                                 <ul class="submenu">
-                                    <li><a href="<?php echo e(env('APP_URL')); ?>admin/in-danh-sach-phong-thi">Danh sách Phòng thi</a></li>
-                                    <li><a href="<?php echo e(env('APP_URL')); ?>admin/in-bang-diem">Bảng điểm</a></li>
+                                    <li><a href="<?php echo e(env('APP_URL')); ?>admin/danh-sach-phong-thi">Danh sách Phòng thi</a></li>
+                                    <li><a href="<?php echo e(env('APP_URL')); ?>admin/bang-diem">Bảng điểm</a></li>
                                 </ul>
                             </li>
                             <li class="has-submenu">

@@ -80,8 +80,35 @@
     @elseif(App\Http\Controllers\XepPhongThiController::check_monthi($id_namhoc, $hocky, $khoi, $id_monthi) == true)
         <div class="alert alert-danger"><h3><i class="fas fa-angry"></i> Đã xếp cho thi rồi [<a href="{{ env('APP_URL') }}admin/xep-phong-thi/delete?id_namhoc={{ $id_namhoc }}&hocky={{ $hocky }}&khoi={{ $khoi }}&id_monthi={{ $id_monthi }}&ngaythi={{ $ngaythi }}&id_buoithi={{ $id_buoithi }}">Xóa xếp lại</a>]</h3></div>
         @if($danhsachxep)
-        ewqeq
-        {{ var_dump($danhsachxep) }}
+        <table class="table table-sm table-border table-bordered table-striped table-hovered">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>SBD</th>
+                    <th>Họ tên</th>
+                    <th>Phòng thi</th>
+                    <th>Môn thi</th>
+                    <th>Buổi thi</th>
+                    <th>Lớp</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($danhsachxep as $kds => $dsx)
+                @php
+                    $pt = App\Models\DMPhongThi::find($dsx['id_phongthi']);
+                    $bt = App\Models\DMBuoiThi::find($dsx['id_buoithi']);
+                @endphp                <tr>
+                    <td class="text-center">{{ $kds+1 }}</td>
+                    <td class="text-center bold">{{ $dsx['SBD'] }}</td>
+                    <td>{{ $dsx['hoten'] }}</td>
+                    <td class="text-center">{{ $pt['ten'] }}</td>
+                    <td class="text-center">{{ $dsx['monthi'] }}</td>
+                    <td class="text-center">{{ $bt['ten'] }}</td>
+                    <td class="text-center">{{ $dsx['lophoc'] }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
         @endif
     @elseif($danhsach)
         @if($phongthi)
@@ -92,6 +119,7 @@
             <input type="hidden" name="khoi" value="{{ $khoi }}" placeholder="">
             <input type="hidden" name="ngaythi" value="{{ $ngaythi }}" placeholder="">
             <input type="hidden" name="id_monthi" value="{{ $id_monthi }}" placeholder="">
+            <input type="hidden" name="monthi" value="" id="monthi" placeholder="">
             <input type="hidden" name="id_buoithi" value="{{ $id_buoithi }}" placeholder="">
             {{ csrf_field() }}
             <div class="alert alert-success">
@@ -129,7 +157,11 @@
                 <input type="hidden" name="soluonghocsinh" id="soluonghocsinh" value="{{ $danhsach->count() }}">
                 <input type="hidden" name="soluongcho" id="soluongcho" value="" />
             </div>
-            <button type="submit" class="btn btn-primary" name="submit" value="OK"><i class="fas fa-list-alt"></i> Xếp phòng</button>
+            <div class="row">
+                <div class="col-12 col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg" name="submit" value="OK"><i class="fas fa-list-alt"></i> Xếp phòng</button>
+                </div>
+            </div>
         </form>
         @endif
     @else

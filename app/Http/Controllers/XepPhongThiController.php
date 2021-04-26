@@ -37,6 +37,8 @@ class XepPhongThiController extends Controller
                 ->where('ngaythi', '=', $ngaythi_date)
                 ->where('id_monthi', '=', $id_monthi)
                 ->where('id_buoithi', '=', $id_buoithi)->get();
+        } else {
+            $danhsach = ''; $danhsachxep = '';
         }
         $buoithi = DMBuoiThi::orderBy('thutu', 'asc')->orderBy('updated', 'desc')->get();
         $phongthi = DMPhongThi::orderBy('thutu', 'asc')->orderBy('updated', 'desc')->get();
@@ -51,6 +53,7 @@ class XepPhongThiController extends Controller
         $khoi = $data['khoi'];
         $ngaythi = $data['ngaythi'];
         $id_monthi = $data['id_monthi'];
+        $monthi = $data['monthi'];
         $id_buoithi = $data['id_buoithi'];
 
         $id_phongthi = $data['id_phongthi'];
@@ -92,6 +95,7 @@ class XepPhongThiController extends Controller
                         $db->ngaythi = $ngaythi_date;
                         $db->ngaythi_text = $ngaythi;
                         $db->id_monthi = ObjectController::ObjectId($id_monthi);
+                        $db->monthi = $monthi;
                         $db->id_buoithi = ObjectController::ObjectId($id_buoithi);
                         $db->id_phongthi = ObjectController::ObjectId($id_phongthi[$key]);
                         $db->hoten = $danhsachhocsinh[$stt]['hoten'];
@@ -102,6 +106,14 @@ class XepPhongThiController extends Controller
                     }
                 }
             }
+            $id = ObjectController::Id();
+            $querLog = array(
+                'action' => 'Xếp phòng thi [Khối '.$khoi.', Năm học '.$namhoc.', Học kỳ . '.$hocky.', Môn thi: '.$monthi.']',
+                'id_collection' => $id,
+                'collection' => 'iexams_xep_phong_thi',
+                'data' => $data
+            );
+            LogController::addLog($querLog);
         }
         //}
         return redirect(env('APP_URL').'admin/xep-phong-thi?id_namhoc='.$id_namhoc.'&hocky='.$hocky.'&khoi='.$khoi.'&ngaythi='.$ngaythi.'&id_monthi='.$id_monthi.'&id_buoithi='.$id_buoithi.'&namhoc='.$namhoc.'&check_phongthi=0&submit=LOAD');
@@ -142,7 +154,21 @@ class XepPhongThiController extends Controller
         $id_monthi = ObjectController::ObjectId($id_monthi);
         $id_buoithi = ObjectController::ObjectId($id_buoithi);
         $ngaythi_date = ObjectController::convertDateTime($ngaythi);
+        $id = ObjectController::Id();
 
+        $data = XepPhongThi::where('id_namhoc', '=', $id_namhoc)
+                ->where('hocky', '=', $hocky)
+                ->where('khoi' , '=', $khoi)
+                ->where('ngaythi', '=', $ngaythi_date)
+                ->where('id_monthi', '=', $id_monthi)
+                ->where('id_buoithi', '=', $id_buoithi)->get();
+        $querLog = array(
+            'action' => 'Xóa xếp phòng thi [Khối '.$khoi.', Năm học '.$data[0]['namhoc'].', Học kỳ . '.$hocky.', Ngày thi: '.$ngaythi.']',
+            'id_collection' => $id,
+            'collection' => 'iexams_xep_phong_thi',
+            'data' => $data
+        );
+        LogController::addLog($querLog);
         XepPhongThi::where('id_namhoc', '=', $id_namhoc)
                 ->where('hocky', '=', $hocky)
                 ->where('khoi' , '=', $khoi)
@@ -150,5 +176,9 @@ class XepPhongThiController extends Controller
                 ->where('id_monthi', '=', $id_monthi)
                 ->where('id_buoithi', '=', $id_buoithi)->delete();
         return redirect(env('APP_URL').'admin/xep-phong-thi?id_namhoc='.$id_namhoc.'&hocky='.$hocky.'&khoi='.$khoi.'&id_monthi='.$id_monthi.'&ngaythi='.$ngaythi.'&id_buoithi='.$id_buoithi.'&submit=LOAD');
+    }
+
+    function danh_sach_phong_thi(Request $request) {
+
     }
 }

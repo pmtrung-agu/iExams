@@ -62,6 +62,9 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
     Route::post('xep-phong-thi/update', 'XepPhongThiController@update')->middleware('role:Admin,Manager');
     Route::get('xep-phong-thi/delete', 'XepPhongThiController@delete')->middleware('role:Admin,Manager');
 
+
+    Route::get('danh-sach-phong-thi', 'XepPhongThiController@danh_sach_phong_thi')->middleware('role:Admin,Manager');
+
     Route::get('user', 'UserController@list')->middleware('role:Admin');
     Route::get('user/change-password', 'UserController@change_password')->middleware('role:Admin');
     Route::post('user/update-password', 'UserController@update_password')->middleware('role:Admin');
@@ -73,4 +76,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
 
     Route::get('dia-chi/get/{id}', 'DMDiaChiController@getOptions');
     Route::get('dia-chi/get/{id}/{id1}', 'DMDiaChiController@getOptions1');
+
+    Route::get('logs', 'LogController@index')->middleware('role:Admin');
+    Route::get('logs/get-log/{id}', 'LogController@get_log')->middleware('role:Admin');
+    Route::get('logs/datatable', 'LogController@datatable')->middleware('role:Admin');
 });

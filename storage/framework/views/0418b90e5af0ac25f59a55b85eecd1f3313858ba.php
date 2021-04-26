@@ -79,9 +79,35 @@
     <?php elseif(App\Http\Controllers\XepPhongThiController::check_monthi($id_namhoc, $hocky, $khoi, $id_monthi) == true): ?>
         <div class="alert alert-danger"><h3><i class="fas fa-angry"></i> Đã xếp cho thi rồi [<a href="<?php echo e(env('APP_URL')); ?>admin/xep-phong-thi/delete?id_namhoc=<?php echo e($id_namhoc); ?>&hocky=<?php echo e($hocky); ?>&khoi=<?php echo e($khoi); ?>&id_monthi=<?php echo e($id_monthi); ?>&ngaythi=<?php echo e($ngaythi); ?>&id_buoithi=<?php echo e($id_buoithi); ?>">Xóa xếp lại</a>]</h3></div>
         <?php if($danhsachxep): ?>
-        ewqeq
-        <?php echo e(var_dump($danhsachxep)); ?>
-
+        <table class="table table-sm table-border table-bordered table-striped table-hovered">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>SBD</th>
+                    <th>Họ tên</th>
+                    <th>Phòng thi</th>
+                    <th>Môn thi</th>
+                    <th>Buổi thi</th>
+                    <th>Lớp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $__currentLoopData = $danhsachxep; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kds => $dsx): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php
+                    $pt = App\Models\DMPhongThi::find($dsx['id_phongthi']);
+                    $bt = App\Models\DMBuoiThi::find($dsx['id_buoithi']);
+                ?>                <tr>
+                    <td class="text-center"><?php echo e($kds+1); ?></td>
+                    <td class="text-center bold"><?php echo e($dsx['SBD']); ?></td>
+                    <td><?php echo e($dsx['hoten']); ?></td>
+                    <td class="text-center"><?php echo e($pt['ten']); ?></td>
+                    <td class="text-center"><?php echo e($dsx['monthi']); ?></td>
+                    <td class="text-center"><?php echo e($bt['ten']); ?></td>
+                    <td class="text-center"><?php echo e($dsx['lophoc']); ?></td>
+                </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+        </table>
         <?php endif; ?>
     <?php elseif($danhsach): ?>
         <?php if($phongthi): ?>
@@ -92,6 +118,7 @@
             <input type="hidden" name="khoi" value="<?php echo e($khoi); ?>" placeholder="">
             <input type="hidden" name="ngaythi" value="<?php echo e($ngaythi); ?>" placeholder="">
             <input type="hidden" name="id_monthi" value="<?php echo e($id_monthi); ?>" placeholder="">
+            <input type="hidden" name="monthi" value="" id="monthi" placeholder="">
             <input type="hidden" name="id_buoithi" value="<?php echo e($id_buoithi); ?>" placeholder="">
             <?php echo e(csrf_field()); ?>
 
@@ -130,7 +157,11 @@
                 <input type="hidden" name="soluonghocsinh" id="soluonghocsinh" value="<?php echo e($danhsach->count()); ?>">
                 <input type="hidden" name="soluongcho" id="soluongcho" value="" />
             </div>
-            <button type="submit" class="btn btn-primary" name="submit" value="OK"><i class="fas fa-list-alt"></i> Xếp phòng</button>
+            <div class="row">
+                <div class="col-12 col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg" name="submit" value="OK"><i class="fas fa-list-alt"></i> Xếp phòng</button>
+                </div>
+            </div>
         </form>
         <?php endif; ?>
     <?php else: ?>
