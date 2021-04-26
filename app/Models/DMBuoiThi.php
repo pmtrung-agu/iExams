@@ -12,6 +12,6 @@ class DMBuoiThi extends Eloquent
     protected $collection = 'iexams_dm_buoi_thi';
 
     protected $fillable = [
-        '_id', 'ten', 'mota'
+        '_id', 'ten', 'mota', 'thutu'
     ];
 }

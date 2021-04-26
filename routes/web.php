@@ -59,6 +59,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
     Route::get('danh-so-bao-danh/delete', 'DanhSachHocSinhController@delete_danh_sach')->middleware('role:Admin,Manager');
 
     Route::get('xep-phong-thi', 'XepPhongThiController@list')->middleware('role:Admin,Manager');
+    Route::post('xep-phong-thi/update', 'XepPhongThiController@update')->middleware('role:Admin,Manager');
+    Route::get('xep-phong-thi/delete', 'XepPhongThiController@delete')->middleware('role:Admin,Manager');
 
     Route::get('user', 'UserController@list')->middleware('role:Admin');
     Route::get('user/change-password', 'UserController@change_password')->middleware('role:Admin');

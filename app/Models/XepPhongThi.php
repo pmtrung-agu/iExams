@@ -12,7 +12,7 @@ class XepPhongThi extends Eloquent
     protected $collection = 'iexams_xep_phong_thi';
 
     protected $fillable = [
-        '_id', 'id_danhsachhocsinh', 'SBD', 'khoi', 'id_namhoc', 'hocky', 'ngaythi', 'id_buoithi', 'id_phongthi', 'hoten', 'ten', 'diemthi'
+        '_id', 'id_danhsachhocsinh', 'SBD', 'khoi', 'id_namhoc', 'hocky', 'ngaythi', 'ngaythi_text', 'id_buoithi', 'id_phongthi', 'hoten', 'ten', 'diemthi'
     ];
 
     protected $dates = ['ngaythi'];
