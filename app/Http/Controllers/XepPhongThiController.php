@@ -34,7 +34,7 @@ class XepPhongThiController extends Controller
             $danhsachxep = XepPhongThi::where('id_namhoc', '=', $id_namhoc)
                 ->where('hocky', '=', $hocky)
                 ->where('khoi' , '=', $khoi)
-                ->where('ngaythi_text', '=', $ngaythi)
+                ->where('ngaythi', '=', $ngaythi_date)
                 ->where('id_monthi', '=', $id_monthi)
                 ->where('id_buoithi', '=', $id_buoithi)->get();
         } else {
@@ -209,10 +209,11 @@ class XepPhongThiController extends Controller
             $danhsach = XepPhongThi::where('id_namhoc', '=', $id_namhoc)
                 ->where('hocky', '=', $hocky)
                 ->where('khoi' , '=', $khoi)
-                ->where('ngaythi_text', '=', $ngaythi)
+                ->where('ngaythi', '=', $ngaythi_date)
                 ->where('id_monthi', '=', $id_monthi)
                 ->where('id_buoithi', '=', $id_buoithi)
                 ->where('id_phongthi', '=', $id_phongthi)->get();
+
         } else {
             $danhsach = '';
         }

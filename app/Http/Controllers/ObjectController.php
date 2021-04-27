@@ -120,7 +120,7 @@ class ObjectController extends Controller
         $hour = 0;
         $minute = 0;
         $second = 0;
-        //return Carbon::create($year, $month, $date, $hour, $minute, $second, $tz);
+        return Carbon::create($year, $month, $date, $hour, $minute, $second, $tz);
     }
 
     public static function convertDateTime_1($str, $time){
