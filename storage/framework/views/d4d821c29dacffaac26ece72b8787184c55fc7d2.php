@@ -38,7 +38,7 @@
                 </div>
                 <div class="row form-group">
                     <div class="col-12 text-center">
-                        <button type="submit" name="submit" id="submit" value="LOAD" class="btn btn-info"><i class=" fas fa-street-view"></i> XEM DANH SÁCH</button>
+                        <button type="submit" name="submit" id="load_danhsach" value="LOAD" class="btn btn-info"><i class=" fas fa-street-view"></i> XEM DANH SÁCH</button>
                     </div>
                 </div>
             </form>
@@ -114,11 +114,11 @@
   <script src="<?php echo e(env('APP_URL')); ?>assets/libs/select2/select2.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-        $(".select2").select2();
+        $(".select2").select2();$("#load_danhsach").prop("disabled", true);
         $.get("<?php echo e(env('APP_URL')); ?>admin/danh-muc/request-nam-hoc-option?id_namhoc=<?php echo e($id_namhoc); ?>", function(data){
             $("#id_namhoc").html(data);$("#id_namhoc").select2();
             var namhoc = $("#id_namhoc option:selected").text();
-            $("#namhoc").val(namhoc);
+            $("#namhoc").val(namhoc); $("#load_danhsach").prop("disabled", false);
         });
         <?php if(!$danhsach && $id_namhoc && $khoi && $hocky): ?>
             $.get("<?php echo e(env('APP_URL')); ?>admin/danh-muc/request-danh-sach-hoc-sinh?id_namhoc=<?php echo e($id_namhoc); ?>&khoi=<?php echo e($khoi); ?>&hocky=<?php echo e($hocky); ?>", function(danhsach){

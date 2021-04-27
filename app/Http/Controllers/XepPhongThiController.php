@@ -34,7 +34,7 @@ class XepPhongThiController extends Controller
             $danhsachxep = XepPhongThi::where('id_namhoc', '=', $id_namhoc)
                 ->where('hocky', '=', $hocky)
                 ->where('khoi' , '=', $khoi)
-                ->where('ngaythi', '=', $ngaythi_date)
+                ->where('ngaythi_text', '=', $ngaythi)
                 ->where('id_monthi', '=', $id_monthi)
                 ->where('id_buoithi', '=', $id_buoithi)->get();
         } else {
@@ -175,10 +175,49 @@ class XepPhongThiController extends Controller
                 ->where('ngaythi', '=', $ngaythi_date)
                 ->where('id_monthi', '=', $id_monthi)
                 ->where('id_buoithi', '=', $id_buoithi)->delete();
+
         return redirect(env('APP_URL').'admin/xep-phong-thi?id_namhoc='.$id_namhoc.'&hocky='.$hocky.'&khoi='.$khoi.'&id_monthi='.$id_monthi.'&ngaythi='.$ngaythi.'&id_buoithi='.$id_buoithi.'&submit=LOAD');
     }
 
-    function danh_sach_phong_thi(Request $request) {
+    function nhap_diem_import(Request $request){
+        return view('Admin.dang-xay-dung');
+    }
 
+    function nhap_diem_truc_tuyen(Request $request){
+        return view('Admin.dang-xay-dung');
+    }
+
+    function danh_sach_phong_thi(Request $request) {
+        $arr_khoi = Config::get('app.arr_khoi');
+        $arr_hocky = Config::get('app.arr_hocky');
+        $id_namhoc = $request->input('id_namhoc');
+        $namhoc = $request->input('namhoc');
+        $hocky = $request->input('hocky');
+        $khoi = $request->input('khoi');
+        $id_monthi = $request->input('id_monthi');
+        $id_buoithi = $request->input('id_buoithi');
+        $id_phongthi = $request->input('id_phongthi');
+        $ngaythi = $request->input('ngaythi');
+        if($id_namhoc && $hocky && $khoi && $ngaythi && $id_monthi && $id_buoithi && $id_phongthi){
+            $id_namhoc = ObjectController::ObjectId($id_namhoc);
+            $id_namhoc = ObjectController::ObjectId($id_namhoc);
+            $danhsach = DanhSachHocSinh::where('id_namhoc','=',$id_namhoc)->where('hocky','=',$hocky)->where('khoi','=',$khoi)->get();
+            $id_monthi = ObjectController::ObjectId($id_monthi);
+            $id_buoithi = ObjectController::ObjectId($id_buoithi);
+            $ngaythi_date = ObjectController::convertDateTime($ngaythi);
+            $id_phongthi = ObjectController::ObjectId($id_phongthi);
+            $danhsach = XepPhongThi::where('id_namhoc', '=', $id_namhoc)
+                ->where('hocky', '=', $hocky)
+                ->where('khoi' , '=', $khoi)
+                ->where('ngaythi_text', '=', $ngaythi)
+                ->where('id_monthi', '=', $id_monthi)
+                ->where('id_buoithi', '=', $id_buoithi)
+                ->where('id_phongthi', '=', $id_phongthi)->get();
+        } else {
+            $danhsach = '';
+        }
+        $buoithi = DMBuoiThi::orderBy('thutu', 'asc')->orderBy('updated', 'desc')->get();
+        $phongthi = DMPhongThi::orderBy('thutu', 'asc')->orderBy('updated', 'desc')->get();
+        return view('Admin.XepPhongThi.danh-sach-phong-thi')->with(compact('arr_khoi', 'arr_hocky', 'id_namhoc', 'namhoc', 'hocky', 'khoi', 'id_monthi', 'id_buoithi', 'id_phongthi', 'ngaythi', 'danhsach', 'buoithi', 'phongthi'));
     }
 }

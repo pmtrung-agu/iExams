@@ -114,13 +114,13 @@ class ObjectController extends Controller
     public static function convertDateTime($str){
         $tz = 'Asia/Ho_Chi_minh'; // instance way
         $a = explode("/", $str);
-        $year = intval($a[2]);
-        $month = intval($a[1]); if($month < 1 || $month > 12) $month = 1;
+        $year = isset($a[2]) ? intval($a[2]) : 2021;
+        $month = isset($a[1]) ? intval($a[1]) : 1; if($month < 1 || $month > 12) $month = 1;
         $date = intval($a[0]); if($date < 1 || $date > 31) $date = 1;
         $hour = 0;
         $minute = 0;
         $second = 0;
-        return Carbon::create($year, $month, $date, $hour, $minute, $second, $tz);
+        //return Carbon::create($year, $month, $date, $hour, $minute, $second, $tz);
     }
 
     public static function convertDateTime_1($str, $time){

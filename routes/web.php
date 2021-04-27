@@ -62,6 +62,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'checkauth'], function(){
     Route::post('xep-phong-thi/update', 'XepPhongThiController@update')->middleware('role:Admin,Manager');
     Route::get('xep-phong-thi/delete', 'XepPhongThiController@delete')->middleware('role:Admin,Manager');
 
+    Route::get('nhap-diem/import', 'XepPhongThiController@nhap_diem_import')->middleware('role:Admin,Manager');
+    Route::get('nhap-diem/truc-tuyen', 'XepPhongThiController@nhap_diem_truc_tuyen')->middleware('role:Admin,Manager');
 
     Route::get('danh-sach-phong-thi', 'XepPhongThiController@danh_sach_phong_thi')->middleware('role:Admin,Manager');
 
